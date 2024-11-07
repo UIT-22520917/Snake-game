@@ -15,14 +15,19 @@ class CONRAN {
 public:
     struct Point A[100];
     int DoDai;
+    Point food;
+    int Diem;
     int MaxX = 20; // Chiều rộng bản đồ
     int MaxY = 20; // Chiều cao bản đồ
 
-    CONRAN() {
+    CONRAN(){
         DoDai = 3;
         A[0].x = 10; A[0].y = 10;
         A[1].x = 9; A[1].y = 10;
         A[2].x = 8; A[2].y = 10;
+        Diem = 0;
+        srand(time(0));
+        taoMoi();
     }
 
     void Ve() {
@@ -50,9 +55,19 @@ public:
         if (vaCham()) EndGame();
         }
     }
+    void taoMoi() {
+        food.x = rand() % 80;
+        food.y = rand() % 25;
+    }
 
     // missing eating food and growing snake, saving points
-    void An() {
+
+    void An(){
+        if (A[0].x == food.x && A[0].y == food.y) {
+            DoDai++; 
+            Diem++;
+            taoMoi();
+        }
 
     }
     bool vaCham() {
@@ -93,6 +108,7 @@ int main() {
         VeVien(r.MaxX, r.MaxY);  // Vẽ viền bản đồ
         r.Ve();
         r.DiChuyen(Huong);
+        r.An();
         Sleep(300);
 
     }
