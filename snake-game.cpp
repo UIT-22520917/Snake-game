@@ -40,6 +40,10 @@ public:
         // Vẽ thức ăn
         gotoxy(food.x, food.y);
         cout << "O";
+
+        // Hiển thị điểm số
+        gotoxy(MaxX + 2, 0); // Đặt vị trí hiển thị điểm bên ngoài bản đồ
+        cout << "Score: " << Diem;
     }
 
     void DiChuyen(int Huong) {
@@ -110,7 +114,7 @@ int main() {
         }
         system("cls");
         VeVien(r.MaxX, r.MaxY);  // Vẽ viền bản đồ
-        r.Ve();                   // Vẽ rắn và thức ăn
+        r.Ve();                   // Vẽ rắn, thức ăn và điểm số
         r.DiChuyen(Huong);        // Di chuyển rắn
         r.An();                   // Kiểm tra nếu rắn ăn thức ăn
         Sleep(300);
