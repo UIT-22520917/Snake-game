@@ -21,8 +21,8 @@ public:
     CONRAN() {
         DoDai = 3;
         A[0].x = 10; A[0].y = 10;
-        A[1].x = 11; A[1].y = 10;
-        A[2].x = 12; A[2].y = 10;
+        A[1].x = 9; A[1].y = 10;
+        A[2].x = 8; A[2].y = 10;
     }
 
     void Ve() {
@@ -36,7 +36,6 @@ public:
     void DiChuyen(int Huong) {
         for (int i = DoDai - 1; i > 0; i--) {
             A[i] = A[i - 1];
-        }
 
         if (Huong == 0) A[0].x = A[0].x + 1;
         if (Huong == 1) A[0].y = A[0].y + 1;
@@ -48,17 +47,32 @@ public:
         if (A[0].x < 0) A[0].x = MaxX - 1;  // Nếu ra ngoài bên trái, xuất hiện bên phải
         if (A[0].y >= MaxY) A[0].y = 0;  // Nếu ra ngoài dưới, xuất hiện trên
         if (A[0].y < 0) A[0].y = MaxY - 1;  // Nếu ra ngoài trên, xuất hiện dưới
+        if (vaCham()) EndGame();
     }
 
     // missing eating food and growing snake, saving points
     void An() {
 
     }
-
-    // missing collision with snake body
-    void vaCham() {
+    bool vaCham() {
+        for (int i = 1; i < DoDai; i++) {
+            // cout << "Collision detected at: (" << A[0].x << ", " << A[0].y << ")" << endl;
+            // for (int i = 0; i < DoDai; i++) {
+            //     cout << "Segment " << i << ": (" << A[i].x << ", " << A[i].y << ")" << endl;
+            // }
+            if (A[0].x == A[i].x && A[0].y == A[i].y) return true;
+        }
+            
+        return false;
 
     }
+
+    void EndGame() {
+        system("cls"); // Clear the screen
+        cout << string(100, '\n'); // Move cursor down to simulate full screen
+        cout << "Game Over" << endl;
+        exit(0); // End the program
+    }  
 };
 
 int main() {
