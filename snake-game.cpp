@@ -2,6 +2,7 @@
 #include <windows.h>
 #include <cstdlib>
 #include <conio.h>
+#include <time.h>
 using namespace std;
 
 void gotoxy(int column, int line);
@@ -48,10 +49,10 @@ public:
         if (Huong == 3) A[0].y = A[0].y - 1;
 
         // Đi xuyên qua bản đồ (công dụng giới hạn)
-        if (A[0].x >= MaxX) A[0].x = 0;  // Nếu ra ngoài bên phải, xuất hiện bên trái
-        if (A[0].x < 0) A[0].x = MaxX - 1;  // Nếu ra ngoài bên trái, xuất hiện bên phải
-        if (A[0].y >= MaxY) A[0].y = 0;  // Nếu ra ngoài dưới, xuất hiện trên
-        if (A[0].y < 0) A[0].y = MaxY - 1;  // Nếu ra ngoài trên, xuất hiện dưới
+        if (A[0].x >= MaxX-1) A[0].x = 1;  // Nếu ra ngoài bên phải, xuất hiện bên trái
+        if (A[0].x < 0) A[0].x = MaxX - 2;  // Nếu ra ngoài bên trái, xuất hiện bên phải
+        if (A[0].y >= MaxY-1) A[0].y = 1;  // Nếu ra ngoài dưới, xuất hiện trên
+        if (A[0].y < 0) A[0].y = MaxY - 2;  // Nếu ra ngoài trên, xuất hiện dưới
         if (vaCham()) EndGame();
         }
     }
