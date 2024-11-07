@@ -13,7 +13,7 @@ struct Point {
 
 class CONRAN {
 public:
-    struct Point A[100];
+    struct Point A[100];    
     int DoDai;
     Point food;
     int Diem;
