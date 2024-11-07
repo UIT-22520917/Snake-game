@@ -20,7 +20,7 @@ public:
     int Diem;
     int MaxX = 20; // Chiều rộng bản đồ
     int MaxY = 20; // Chiều cao bản đồ
-    int speed=300;
+    int speed= 200;
     int currentDirection; // Biến lưu hướng hiện tại
 
     CONRAN() {
@@ -91,7 +91,10 @@ public:
             }
         }
 
-        if (vaCham()) EndGame();
+        if (vaCham()) {
+            Sleep(1000); // dừng 1 giây cho người dùng thấy tại sao end game
+            EndGame();
+        }
     }   
 
     void taoMoi() {
