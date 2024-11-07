@@ -48,6 +48,7 @@ public:
         if (A[0].y >= MaxY) A[0].y = 0;  // Nếu ra ngoài dưới, xuất hiện trên
         if (A[0].y < 0) A[0].y = MaxY - 1;  // Nếu ra ngoài trên, xuất hiện dưới
         if (vaCham()) EndGame();
+        }
     }
 
     // missing eating food and growing snake, saving points
