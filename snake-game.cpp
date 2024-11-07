@@ -20,8 +20,8 @@ public:
     int Diem;
     int MaxX = 20; // Chiều rộng bản đồ
     int MaxY = 20; // Chiều cao bản đồ
+    int speed=300;
     int currentDirection; // Biến lưu hướng hiện tại
-
 
     CONRAN() {
         DoDai = 3;
@@ -77,9 +77,9 @@ public:
 
         // Đi xuyên qua bản đồ (công dụng giới hạn)
         if (A[0].x >= MaxX-1) A[0].x = 1;  // Nếu ra ngoài bên phải, xuất hiện bên trái
-        if (A[0].x < 0) A[0].x = MaxX - 2;  // Nếu ra ngoài bên trái, xuất hiện bên phải
+        if (A[0].x < 1) A[0].x = MaxX - 2;  // Nếu ra ngoài bên trái, xuất hiện bên phải
         if (A[0].y >= MaxY-1) A[0].y = 1;  // Nếu ra ngoài dưới, xuất hiện trên
-        if (A[0].y < 0) A[0].y = MaxY - 2;  // Nếu ra ngoài trên, xuất hiện dưới
+        if (A[0].y < 1) A[0].y = MaxY - 2;  // Nếu ra ngoài trên, xuất hiện dưới
 
         // Kiểm tra va chạm với thân rắn
         for (int i = 1; i < DoDai; i++) {
@@ -105,6 +105,7 @@ public:
         if (A[0].x == food.x && A[0].y == food.y) {
             DoDai++;    // Tăng độ dài rắn
             Diem++;     // Tăng điểm
+            speed-= 15;
             taoMoi();   // Sinh thức ăn mới
         }
     }
@@ -124,6 +125,7 @@ public:
         system("cls"); // Xóa màn hình
         cout << "Game Over" << endl;
         cout << "Score: " << Diem << endl;
+        Sleep(1000);
         exit(0); // Kết thúc chương trình
     }
 };
@@ -132,7 +134,7 @@ int main() {
     CONRAN r;
     int Huong = 0;
     char t;
-
+    
     while (1) {
         if (kbhit()) {
             t = getch();
@@ -146,7 +148,7 @@ int main() {
         r.Ve();                   // Vẽ rắn, thức ăn và điểm số
         r.DiChuyen(Huong);        // Di chuyển rắn
         r.An();                   // Kiểm tra nếu rắn ăn thức ăn
-        Sleep(300);
+        Sleep(r.speed);
     }
 
     return 0;
