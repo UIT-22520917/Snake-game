@@ -62,7 +62,7 @@ public:
         }
 
         // Lưu vị trí trước khi di chuyển
-        Point prevHead = A[0];
+        Point prevDirection = A[0];
 
         // Di chuyển thân rắn
         for (int i = DoDai - 1; i > 0; i--) {
@@ -85,7 +85,7 @@ public:
         for (int i = 1; i < DoDai; i++) {
             if (A[0].x == A[i].x && A[0].y == A[i].y) {
                 // Reset to previous state if collision detected
-                A[0] = prevHead;
+                A[0] = prevDirection;
                 DoDai--; // Giảm độ dài rắn
                 break;
             }
@@ -123,7 +123,7 @@ public:
             Diem++;     // Tăng điểm
             speed-= 5;
             taoMoi();   // Sinh thức ăn mới
-        }
+        }   
     }
 
     bool vaCham() {
