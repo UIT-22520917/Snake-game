@@ -14,8 +14,8 @@ public:
     CONRAN(){
         DoDai = 3;
         A[0].x = 10; A[0].y = 10;
-        A[1].x = 11; A[1].y = 10;
-        A[2].x = 12; A[2].y = 10;
+        A[1].x = 9; A[1].y = 10;
+        A[2].x = 8; A[2].y = 10;
     }
 
     void Ve(){
@@ -33,6 +33,7 @@ public:
         if (Huong==1) A[0].y = A[0].y + 1;
         if (Huong==2) A[0].x = A[0].x - 1;
         if (Huong==3) A[0].y = A[0].y - 1;
+        if (vaCham()) EndGame();
 
     }
 
@@ -42,9 +43,24 @@ public:
     }
     // missing collision with snake body
 
-    void vaCham() {
-
+    bool vaCham() {
+        for (int i = 1; i < DoDai; i++) {
+            // cout << "Collision detected at: (" << A[0].x << ", " << A[0].y << ")" << endl;
+            // for (int i = 0; i < DoDai; i++) {
+            //     cout << "Segment " << i << ": (" << A[i].x << ", " << A[i].y << ")" << endl;
+            // }
+            if (A[0].x == A[i].x && A[0].y == A[i].y) return true;
+        }
+            
+        return false;
     }
+
+    void EndGame() {
+        system("cls"); // Clear the screen
+        cout << string(100, '\n'); // Move cursor down to simulate full screen
+        cout << "Game Over" << endl;
+        exit(0); // End the program
+    }  
 };
 
 int main()
