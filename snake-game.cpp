@@ -58,7 +58,7 @@ public:
             (Huong == 3 && currentDirection == 1)) {
             Huong = currentDirection; // Giữ nguyên hướng hiện tại nếu hướng mới là ngược lại
         } else {
-            currentDirection = Huong; // Cập nhật hướng hiện tại
+            currentDirection = Huong; 
         }
 
         // Lưu vị trí trước khi di chuyển
