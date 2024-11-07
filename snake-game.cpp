@@ -121,7 +121,7 @@ public:
         if (A[0].x == food.x && A[0].y == food.y) {
             DoDai++;    // Tăng độ dài rắn
             Diem++;     // Tăng điểm
-            speed-= 15;
+            speed-= 5;
             taoMoi();   // Sinh thức ăn mới
         }
     }
