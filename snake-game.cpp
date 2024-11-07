@@ -20,75 +20,79 @@ public:
     int MaxX = 20; // Chiều rộng bản đồ
     int MaxY = 20; // Chiều cao bản đồ
 
-    CONRAN(){
+    CONRAN() {
         DoDai = 3;
         A[0].x = 10; A[0].y = 10;
         A[1].x = 9; A[1].y = 10;
         A[2].x = 8; A[2].y = 10;
         Diem = 0;
         srand(time(0));
-        taoMoi();
+        taoMoi(); // Tạo thức ăn ban đầu
     }
 
     void Ve() {
+        // Vẽ rắn
         for (int i = 0; i < DoDai; i++) {
             gotoxy(A[i].x, A[i].y);
             cout << "X";
         }
+
+        // Vẽ thức ăn
+        gotoxy(food.x, food.y);
+        cout << "O";
     }
 
-    // missing arrow keys for movement, add collision, limit the area of movement but can go through like a loop
     void DiChuyen(int Huong) {
+        // Di chuyển thân rắn
         for (int i = DoDai - 1; i > 0; i--) {
             A[i] = A[i - 1];
+        }
 
-        if (Huong == 0) A[0].x = A[0].x + 1;
-        if (Huong == 1) A[0].y = A[0].y + 1;
-        if (Huong == 2) A[0].x = A[0].x - 1;
-        if (Huong == 3) A[0].y = A[0].y - 1;
+        // Di chuyển đầu rắn theo hướng
+        if (Huong == 0) A[0].x = A[0].x + 1;    // Đi sang phải
+        if (Huong == 1) A[0].y = A[0].y + 1;    // Đi xuống
+        if (Huong == 2) A[0].x = A[0].x - 1;    // Đi sang trái
+        if (Huong == 3) A[0].y = A[0].y - 1;    // Đi lên
 
-        // Đi xuyên qua bản đồ (công dụng giới hạn)
-        if (A[0].x >= MaxX) A[0].x = 0;  // Nếu ra ngoài bên phải, xuất hiện bên trái
-        if (A[0].x < 0) A[0].x = MaxX - 1;  // Nếu ra ngoài bên trái, xuất hiện bên phải
-        if (A[0].y >= MaxY) A[0].y = 0;  // Nếu ra ngoài dưới, xuất hiện trên
-        if (A[0].y < 0) A[0].y = MaxY - 1;  // Nếu ra ngoài trên, xuất hiện dưới
+        // Xử lý cho rắn đi xuyên qua biên bản đồ
+        if (A[0].x >= MaxX) A[0].x = 1;        // Nếu ra ngoài phải, xuất hiện bên trái
+        if (A[0].x < 1) A[0].x = MaxX - 1;     // Nếu ra ngoài trái, xuất hiện bên phải
+        if (A[0].y >= MaxY) A[0].y = 1;        // Nếu ra ngoài dưới, xuất hiện trên
+        if (A[0].y < 1) A[0].y = MaxY - 1;     // Nếu ra ngoài trên, xuất hiện dưới
+
+        // Kiểm tra va chạm với thân rắn
         if (vaCham()) EndGame();
-        }
     }
+
     void taoMoi() {
-        food.x = rand() % 80;
-        food.y = rand() % 25;
+        // Đặt thức ăn trong phạm vi bản đồ, tránh viền
+        food.x = rand() % (MaxX - 2) + 1; // X trong khoảng từ 1 đến MaxX - 2
+        food.y = rand() % (MaxY - 2) + 1; // Y trong khoảng từ 1 đến MaxY - 2
     }
 
-    // missing eating food and growing snake, saving points
-
-    void An(){
+    void An() {
+        // Kiểm tra nếu đầu rắn ăn thức ăn
         if (A[0].x == food.x && A[0].y == food.y) {
-            DoDai++; 
-            Diem++;
-            taoMoi();
+            DoDai++;    // Tăng độ dài rắn
+            Diem++;     // Tăng điểm
+            taoMoi();   // Sinh thức ăn mới
         }
-
     }
+
     bool vaCham() {
+        // Kiểm tra va chạm của đầu rắn với thân
         for (int i = 1; i < DoDai; i++) {
-            // cout << "Collision detected at: (" << A[0].x << ", " << A[0].y << ")" << endl;
-            // for (int i = 0; i < DoDai; i++) {
-            //     cout << "Segment " << i << ": (" << A[i].x << ", " << A[i].y << ")" << endl;
-            // }
             if (A[0].x == A[i].x && A[0].y == A[i].y) return true;
         }
-            
         return false;
-
     }
 
     void EndGame() {
-        system("cls"); // Clear the screen
-        cout << string(100, '\n'); // Move cursor down to simulate full screen
+        system("cls"); // Xóa màn hình
         cout << "Game Over" << endl;
-        exit(0); // End the program
-    }  
+        cout << "Score: " << Diem << endl;
+        exit(0); // Kết thúc chương trình
+    }
 };
 
 int main() {
@@ -106,11 +110,10 @@ int main() {
         }
         system("cls");
         VeVien(r.MaxX, r.MaxY);  // Vẽ viền bản đồ
-        r.Ve();
-        r.DiChuyen(Huong);
-        r.An();
+        r.Ve();                   // Vẽ rắn và thức ăn
+        r.DiChuyen(Huong);        // Di chuyển rắn
+        r.An();                   // Kiểm tra nếu rắn ăn thức ăn
         Sleep(300);
-
     }
 
     return 0;
@@ -143,6 +146,7 @@ void VeVien(int MaxX, int MaxY) {
     }
 }
 
+// Hàm đặt vị trí con trỏ trong console
 void gotoxy(int column, int line) {
     COORD coord;
     coord.X = column;
