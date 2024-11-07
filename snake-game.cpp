@@ -94,6 +94,7 @@ int main() {
         r.Ve();
         r.DiChuyen(Huong);
         Sleep(300);
+
     }
 
     return 0;
