@@ -11,11 +11,16 @@ class CONRAN{
 public:
     struct Point A[100];
     int DoDai;
+    Point food;
+    int Diem;
     CONRAN(){
         DoDai = 3;
         A[0].x = 10; A[0].y = 10;
         A[1].x = 11; A[1].y = 10;
         A[2].x = 12; A[2].y = 10;
+        Diem = 0;
+        srand(time(0));
+        taoMoi();
     }
 
     void Ve(){
@@ -35,10 +40,18 @@ public:
         if (Huong==3) A[0].y = A[0].y - 1;
 
     }
+    void taoMoi() {
+        food.x = rand() % 80;
+        food.y = rand() % 25;
+    }
 
     // missing eating food and growing snake, saving points
     void An(){
-
+        if (A[0].x == food.x && A[0].y == food.y) {
+            DoDai++; 
+            Diem++;
+            taoMoi();
+        }
     }
     // missing collision with snake body
 
@@ -65,6 +78,7 @@ int main()
         system("cls");
         r.Ve();
         r.DiChuyen(Huong);
+        r.An();
         Sleep(300);
     }
 
