@@ -20,6 +20,8 @@ public:
     int Diem;
     int MaxX = 20; // Chiều rộng bản đồ
     int MaxY = 20; // Chiều cao bản đồ
+    int currentDirection; // Biến lưu hướng hiện tại
+
 
     CONRAN() {
         DoDai = 3;
@@ -27,6 +29,7 @@ public:
         A[1].x = 9; A[1].y = 10;
         A[2].x = 8; A[2].y = 10;
         Diem = 0;
+        currentDirection = 0; // Khởi tạo hướng ban đầu
         srand(time(0));
         taoMoi(); // Tạo thức ăn ban đầu
     }
@@ -47,7 +50,20 @@ public:
         cout << "Score: " << Diem;
     }
 
-    void DiChuyen(int Huong) {
+    void DiChuyen(int &Huong) {
+        // Kiểm tra nếu hướng mới là ngược lại hướng hiện tại
+        if ((Huong == 0 && currentDirection == 2) || 
+            (Huong == 2 && currentDirection == 0) || 
+            (Huong == 1 && currentDirection == 3) || 
+            (Huong == 3 && currentDirection == 1)) {
+            Huong = currentDirection; // Giữ nguyên hướng hiện tại nếu hướng mới là ngược lại
+        } else {
+            currentDirection = Huong; // Cập nhật hướng hiện tại
+        }
+
+        // Lưu vị trí trước khi di chuyển
+        Point prevHead = A[0];
+
         // Di chuyển thân rắn
         for (int i = DoDai - 1; i > 0; i--) {
             A[i] = A[i - 1];
@@ -58,14 +74,25 @@ public:
         if (Huong == 1) A[0].y = A[0].y + 1;    // Đi xuống
         if (Huong == 2) A[0].x = A[0].x - 1;    // Đi sang trái
         if (Huong == 3) A[0].y = A[0].y - 1;    // Đi lên
+
         // Đi xuyên qua bản đồ (công dụng giới hạn)
         if (A[0].x >= MaxX-1) A[0].x = 1;  // Nếu ra ngoài bên phải, xuất hiện bên trái
         if (A[0].x < 0) A[0].x = MaxX - 2;  // Nếu ra ngoài bên trái, xuất hiện bên phải
         if (A[0].y >= MaxY-1) A[0].y = 1;  // Nếu ra ngoài dưới, xuất hiện trên
         if (A[0].y < 0) A[0].y = MaxY - 2;  // Nếu ra ngoài trên, xuất hiện dưới
 
+        // Kiểm tra va chạm với thân rắn
+        for (int i = 1; i < DoDai; i++) {
+            if (A[0].x == A[i].x && A[0].y == A[i].y) {
+                // Reset to previous state if collision detected
+                A[0] = prevHead;
+                DoDai--; // Giảm độ dài rắn
+                break;
+            }
+        }
+
         if (vaCham()) EndGame();
-    }
+    }   
 
     void taoMoi() {
         // Đặt thức ăn trong phạm vi bản đồ, tránh viền
@@ -85,7 +112,10 @@ public:
     bool vaCham() {
         // Kiểm tra va chạm của đầu rắn với thân
         for (int i = 1; i < DoDai; i++) {
-            if (A[0].x == A[i].x && A[0].y == A[i].y) return true;
+            if (A[0].x == A[i].x && A[0].y == A[i].y) 
+                if (A[0].x == A[2].x && A[0].y == A[2].y) return false;
+                else
+            return true;
         }
         return false;
     }
