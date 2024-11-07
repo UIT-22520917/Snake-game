@@ -68,11 +68,24 @@ public:
         if (vaCham()) EndGame();
     }
 
-    void taoMoi() {
-        // Đặt thức ăn trong phạm vi bản đồ, tránh viền
+   void taoMoi() {
+    bool valid = false;  // Biến kiểm tra xem vị trí thức ăn có hợp lệ không
+    while (!valid) {
+        // Sinh ra tọa độ thức ăn ngẫu nhiên
         food.x = rand() % (MaxX - 2) + 1; // X trong khoảng từ 1 đến MaxX - 2
         food.y = rand() % (MaxY - 2) + 1; // Y trong khoảng từ 1 đến MaxY - 2
+
+        // Kiểm tra xem thức ăn có trùng với thân rắn không
+        valid = true;  // Giả định thức ăn hợp lệ
+        for (int i = 0; i < DoDai; i++) {
+            if (A[i].x == food.x && A[i].y == food.y) {
+                valid = false;  // Nếu thức ăn trùng với thân, set lại valid = false và thoát khỏi vòng lặp
+                break;
+            }
+        }
     }
+}
+
 
     void An() {
         // Kiểm tra nếu đầu rắn ăn thức ăn
