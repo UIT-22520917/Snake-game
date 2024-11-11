@@ -23,17 +23,19 @@ public:
     int speed= 200;
     int currentDirection; // Biến lưu hướng hiện tại
 
-    CONRAN() {
-        DoDai = 3;
-        A[0].x = 10; A[0].y = 10;
-        A[1].x = 9; A[1].y = 10;
-        A[2].x = 8; A[2].y = 10;
-        Diem = 0;
-        currentDirection = 0; // Khởi tạo hướng ban đầu
-        srand(time(0));
-        taoMoi(); // Tạo thức ăn ban đầu
-    }
-
+   CONRAN() {
+    resetGame();
+ }
+void resetGame() {
+    DoDai = 3;
+    A[0].x = 10; A[0].y = 10;
+    A[1].x = 9; A[1].y = 10;
+    A[2].x = 8; A[2].y = 10;
+    Diem = 0;
+    currentDirection = 0; // Khởi tạo hướng ban đầu
+    srand(time(0));
+    taoMoi(); // Tạo thức ăn ban đầu
+}
     void Ve() {
         // Vẽ rắn
         for (int i = 0; i < DoDai; i++) {
@@ -141,15 +143,15 @@ public:
         cout << "======================" << endl;
         cout << "      GAME OVER " << endl;
         cout << "       Score: " << Diem << endl;
-        cout << "   SPACE to restart." << endl;
+        cout << "      q to restart." << endl;
         cout << "      e to exit." << endl;
         cout << "======================" << endl;
         
         while (true) {
             if (_kbhit()) {
                 char ch = _getch();
-                if (ch == ' ') {
-                    CONRAN();  // Khởi động lại trò chơi
+                if (ch == 'q') {
+                    resetGame();  // Khởi động lại trò chơi
                     break;
                 }
                 else if (ch == 'e') {
