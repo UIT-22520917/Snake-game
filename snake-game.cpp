@@ -136,7 +136,7 @@ public:
         }
         return false;
     }
-        void EndGame() {
+    void EndGame() { 
         system("cls");
         cout << "======================" << endl;
         cout << "      GAME OVER " << endl;
