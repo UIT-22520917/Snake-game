@@ -136,17 +136,47 @@ public:
         }
         return false;
     }
-
-    void EndGame() {
-        system("cls"); // Xóa màn hình
-        cout << "Game Over" << endl;
-        cout << "Score: " << Diem << endl;
-        Sleep(1000);
-        exit(0); // Kết thúc chương trình
+        void EndGame() {
+        system("cls");
+        cout << "======================" << endl;
+        cout << "      GAME OVER " << endl;
+        cout << "       Score: " << Diem << endl;
+        cout << "   SPACE to restart." << endl;
+        cout << "      e to exit." << endl;
+        cout << "======================" << endl;
+        
+        while (true) {
+            if (_kbhit()) {
+                char ch = _getch();
+                if (ch == ' ') {
+                    CONRAN();  // Khởi động lại trò chơi
+                    break;
+                }
+                else if (ch == 'e') {
+                    exit(0);  // Thoát trò chơi
+                }
+            }
+        }
     }
 };
 
+void StartScreen() {
+    system("cls");
+    cout << "======================" << endl;
+    cout << "   TRO CHOI CON RAN   " << endl;
+    cout << "Press SPACE to start!" << endl;
+    cout << "======================" << endl;
+
+    while (true) {
+        if (_kbhit()) {
+            char ch = _getch();
+            if (ch == ' ') break; // Khi nhấn phím cách thì bắt đầu trò chơi
+        }
+    }
+}
+
 int main() {
+    StartScreen();
     CONRAN r;
     int Huong = 0;
     char t;
