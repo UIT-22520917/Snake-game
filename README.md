@@ -1,5 +1,6 @@
-Mọi người clone về, tạo branch, thêm tên mình vô README, rồi push để merge nha:
+Đồ án cuối kì: Snake Game
 ---
+#### môn: Kỹ năng nghề nghiệp - SS004.P12
 ### Giáo viên: Nguyễn Văn Toàn (toannv@uit.edu.vn)
 ### Thành viên:
 - 22520917 - Nguyễn Hữu Nam
