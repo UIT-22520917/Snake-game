@@ -85,7 +85,7 @@ void resetGame() {
 
         // // Kiểm tra va chạm với thân rắn
         // for (int i = 1; i < DoDai; i++) {
-        //     if (A[0].x == A[i].x && A[0].y == A[i].y) {
+        //     if (A[0].x == A[i].x && A[0].y == A[ai].y) {
         //         // Reset to previous state if collision detected
         //         A[0] = prevDirection;
         //         DoDai--; // Giảm độ dài rắn
