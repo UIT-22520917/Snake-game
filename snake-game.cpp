@@ -26,6 +26,7 @@ public:
    CONRAN() {
     resetGame();
  }
+
 void resetGame() {
     DoDai = 3;
     A[0].x = 10; A[0].y = 10;
@@ -36,6 +37,7 @@ void resetGame() {
     srand(time(0));
     taoMoi(); // Tạo thức ăn ban đầu
 }
+
     void Ve() {
         // Vẽ rắn
         for (int i = 0; i < DoDai; i++) {
@@ -62,10 +64,6 @@ void resetGame() {
         } else {
             currentDirection = Huong; 
         }
-
-        // // Lưu vị trí trước khi di chuyển
-        // Point prevDirection = A[0];
-
         // Di chuyển thân rắn
         for (int i = DoDai - 1; i > 0; i--) {
             A[i] = A[i - 1];
@@ -82,16 +80,6 @@ void resetGame() {
         if (A[0].x < 1) A[0].x = MaxX - 2;  // Nếu ra ngoài bên trái, xuất hiện bên phải
         if (A[0].y >= MaxY-1) A[0].y = 1;  // Nếu ra ngoài dưới, xuất hiện trên
         if (A[0].y < 1) A[0].y = MaxY - 2;  // Nếu ra ngoài trên, xuất hiện dưới
-
-        // // Kiểm tra va chạm với thân rắn
-        // for (int i = 1; i < DoDai; i++) {
-        //     if (A[0].x == A[i].x && A[0].y == A[ai].y) {
-        //         // Reset to previous state if collision detected
-        //         A[0] = prevDirection;
-        //         DoDai--; // Giảm độ dài rắn
-        //         break;
-        //     }
-        // }
 
         if (vaCham()) {
             Sleep(1000); // dừng 1 giây cho người dùng thấy tại sao end game
@@ -130,10 +118,8 @@ void resetGame() {
 
     bool vaCham() {
         // Kiểm tra va chạm của đầu rắn với thân
-        for (int i = 1; i < DoDai; i++) {
+        for (int i = 2; i < DoDai; i++) {
             if (A[0].x == A[i].x && A[0].y == A[i].y) 
-                if (A[0].x == A[2].x && A[0].y == A[2].y) return false;
-                else
             return true;
         }
         return false;
@@ -182,7 +168,6 @@ int main() {
     CONRAN r;
     int Huong = 0;
     char t;
-    
     while (1) {
         if (kbhit()) {
             t = getch();
@@ -190,10 +175,14 @@ int main() {
             if (t == 'w') Huong = 3;
             if (t == 'd') Huong = 0;
             if (t == 's') Huong = 1;
+            if (t == 'e') {
+                r.EndGame(); // Kết thúc game
+            }; // Thoát game
         }
         system("cls");
         VeVien(r.MaxX, r.MaxY);  // Vẽ viền bản đồ
         r.Ve();                   // Vẽ rắn, thức ăn và điểm số
+        //---
         r.DiChuyen(Huong);        // Di chuyển rắn
         r.An();                   // Kiểm tra nếu rắn ăn thức ăn
         Sleep(r.speed);
